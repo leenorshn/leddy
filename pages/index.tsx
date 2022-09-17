@@ -55,7 +55,7 @@ export default function Home() {
       <main>
 
         <Banner />
-        <Rooms rooms={rooms} />
+        <Rooms />
         <AboutTile />
         <Contact />
 

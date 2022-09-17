@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminBar from '../../components/AdminBar'
+import AdminBar from '../../../components/AdminBar'
 const people = [
     { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
     // More people...
@@ -11,6 +11,7 @@ function classNames(...classes) {
 
 
 import useSWR from "swr"
+import Link from 'next/link'
 
 /* This example requires Tailwind CSS v2.0+ */
 
@@ -32,6 +33,10 @@ function Chambres() {
                     <h1 className="text-xl font-semibold text-gray-900">Chambres</h1>
 
                 </div>
+                <Link href={`/admin/chambre/new`}>
+                    <a className='bg-blue-600 text-white px-8 py-2 rounded-md cursor-pointer'>Nouveau</a>
+                </Link>
+
 
             </div>
             <div className="mt-8 flex flex-col">

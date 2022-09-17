@@ -2,9 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import useSWR from 'swr'
 
 
-export default function Rooms({ rooms }) {
+export default function Rooms({ }) {
+    const fetcher = (...args) => fetch("/api/chambre").then(res => res.json())
+    const { error, data } = useSWR("/api/chambre", fetcher)
+    if (error) {
+        return <>{"Erreur:" + error}</>
+    }
+    if (!data) {
+        return <>chargement...</>
+    }
     return (
         <div className="bg-white">
             <div className="mx-auto max-w-2xl py-4 px-4 sm:py-6 sm:px-2 lg:max-w-5xl lg:px-3">
@@ -16,12 +25,12 @@ export default function Rooms({ rooms }) {
                 </div>
 
                 <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-4 lg:grid-cols-3 xl:gap-x-4">
-                    {rooms.map((room) => (
+                    {data.map((room) => (
                         <div key={room.id} className=" rounded-md">
                             <div className="relative">
                                 <div className="relative h-72 w-80 overflow-hidden rounded-lg">
                                     <Image
-                                        src={room.imageSrc}
+                                        src={room.url}
                                         alt={room.imageAlt}
                                         layout="fill"
                                         className=" object-cover object-center"
