@@ -7,7 +7,7 @@ const AppBar = () => {
         <div className='bg-orange-500 sticky top-0 left-0 right-0 z-50'>
             <header className='flex items-center justify-between  max-w-5xl mx-auto'>
                 <Link href="/">
-                    <a className='text-2xl font-semibold text-white'>Ladys Hotel</a>
+                    <a className='text-2xl font-semibold text-white'>Ivatsiro Hotel</a>
                 </Link>
                 <nav>
                     <ul className='flex flex-wrap justify-center space-x-6 py-4 '>

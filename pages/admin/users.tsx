@@ -97,7 +97,7 @@ function Users() {
                                                     'whitespace-nowrap px-3 py-4 text-sm text-black hidden lg:table-cell'
                                                 )}
                                             >
-                                                {person.email}
+                                                {person.role}
                                             </td>
 
                                         </tr>

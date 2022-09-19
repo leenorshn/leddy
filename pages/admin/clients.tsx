@@ -36,7 +36,7 @@ function Users() {
                 </div>
 
             </div>
-            <div className="mt-8 flex flex-col">
+            <div className="mt-3 flex flex-col">
                 <div className="">
                     <div className="inline-block min-w-full py-2 align-middle">
                         <div className="shadow-sm ring-1 ring-black ring-opacity-5">
@@ -60,7 +60,7 @@ function Users() {
                                             scope="col"
                                             className="sticky top-0 z-10 border-b border-gray-300   px-3 py-3.5 text-left text-sm font-semibold text-gray-50 backdrop-blur backdrop-filter"
                                         >
-                                            Date
+                                            Email
                                         </th>
 
                                     </tr>

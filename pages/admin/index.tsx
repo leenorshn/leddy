@@ -31,48 +31,55 @@ function Admin() {
             <AdminBar />
             <div className="sm:flex sm:items-center mt-4">
                 <div className="sm:flex-auto">
-                    <h1 className="text-xl font-semibold text-gray-900">Reservations</h1>
+                    <h1 className="text-xl font-semibold text-black">Reservations</h1>
 
                 </div>
 
             </div>
-            <div className="mt-8 flex flex-col">
+            <div className="mt-3 flex flex-col">
                 <div className="">
                     <div className="inline-block min-w-full py-2 align-middle">
                         <div className="shadow-sm ring-1 ring-black ring-opacity-5">
                             <table className="min-w-full border-separate" style={{ borderSpacing: 0 }}>
-                                <thead className="bg-gray-50">
+                                <thead className="bg-black">
                                     <tr>
                                         <th
                                             scope="col"
-                                            className="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8"
+                                            className="sticky top-0 z-10 border-b border-gray-300  bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white backdrop-blur backdrop-filter sm:pl-6 lg:pl-8"
                                         >
-                                            Name
+                                            Chambre
                                         </th>
                                         <th
                                             scope="col"
-                                            className="sticky top-0 z-10 hidden border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell"
+                                            className="sticky top-0 z-10 hidden border-b border-gray-300  bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-white backdrop-blur backdrop-filter sm:table-cell"
                                         >
-                                            Title
+                                            Prix/jour
                                         </th>
                                         <th
                                             scope="col"
-                                            className="sticky top-0 z-10 hidden border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell"
+                                            className="sticky top-0 z-10 hidden border-b border-gray-300  bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-white backdrop-blur backdrop-filter lg:table-cell"
                                         >
-                                            Email
+                                            Client
                                         </th>
                                         <th
                                             scope="col"
-                                            className="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
+                                            className="sticky top-0 z-10 border-b border-gray-300  bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-white backdrop-blur backdrop-filter"
                                         >
-                                            Role
+                                            Durée
                                         </th>
                                         <th
                                             scope="col"
-                                            className="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 py-3.5 pr-4 pl-3 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8"
+                                            className="sticky top-0 z-10 border-b border-gray-300  bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-white backdrop-blur backdrop-filter"
                                         >
-                                            <span className="sr-only">Edit</span>
+                                            Total
                                         </th>
+                                        <th
+                                            scope="col"
+                                            className="sticky top-0 z-10 border-b border-gray-300  bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-white backdrop-blur backdrop-filter"
+                                        >
+                                            Date
+                                        </th>
+
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white">
@@ -81,7 +88,7 @@ function Admin() {
                                             <td
                                                 className={classNames(
                                                     reservationIdx !== people.length - 1 ? 'border-b border-gray-200' : '',
-                                                    'whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8'
+                                                    'whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 lg:pl-8'
                                                 )}
                                             >
                                                 {reservation.room.numero}
@@ -89,7 +96,7 @@ function Admin() {
                                             <td
                                                 className={classNames(
                                                     reservationIdx !== people.length - 1 ? 'border-b border-gray-200' : '',
-                                                    'whitespace-nowrap px-3 py-4 text-sm text-gray-500 hidden sm:table-cell'
+                                                    'whitespace-nowrap px-3 py-4 text-sm text-gray-800 hidden sm:table-cell'
                                                 )}
                                             >
                                                 {reservation.room.price}
@@ -97,7 +104,7 @@ function Admin() {
                                             <td
                                                 className={classNames(
                                                     reservationIdx !== people.length - 1 ? 'border-b border-gray-200' : '',
-                                                    'whitespace-nowrap px-3 py-4 text-sm text-gray-500 hidden lg:table-cell'
+                                                    'whitespace-nowrap px-3 py-4 text-sm text-gray-800 hidden lg:table-cell'
                                                 )}
                                             >
                                                 {reservation.customer.name}
@@ -105,7 +112,7 @@ function Admin() {
                                             <td
                                                 className={classNames(
                                                     reservationIdx !== people.length - 1 ? 'border-b border-gray-200' : '',
-                                                    'whitespace-nowrap px-3 py-4 text-sm text-gray-500'
+                                                    'whitespace-nowrap px-3 py-4 text-sm text-gray-800'
                                                 )}
                                             >
                                                 {reservation.dure}
@@ -113,7 +120,15 @@ function Admin() {
                                             <td
                                                 className={classNames(
                                                     reservationIdx !== people.length - 1 ? 'border-b border-gray-200' : '',
-                                                    'whitespace-nowrap px-3 py-4 text-sm text-gray-500'
+                                                    'whitespace-nowrap px-3 py-4 text-sm text-gray-800'
+                                                )}
+                                            >
+                                                {reservation.totalPayment}
+                                            </td>
+                                            <td
+                                                className={classNames(
+                                                    reservationIdx !== people.length - 1 ? 'border-b border-gray-200' : '',
+                                                    'whitespace-nowrap px-3 py-4 text-sm text-gray-800'
                                                 )}
                                             >
                                                 {reservation.createdAt}

@@ -1,20 +1,18 @@
-/*
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
+import { useRouter } from "next/router"
+import { useState } from "react"
+
 export default function Example() {
+    const [form, setForm] = useState({ numero: "", category: "", price: 0, url: "" })
+    const router = useRouter()
+
+    const newRoom = async () => {
+        const resp = await fetch('/chambre', {
+            method: "POST", body: JSON.stringify({ ...form }), headers: {
+                "content-type": "application/json"
+            }
+        })
+        router.replace("/")
+    }
     return (
         <div className="mx-auto max-w-3xl bg-slate-300 px-32 pt-0 pb-16">
             <form className="space-y-8 divide-y divide-gray-200">
@@ -37,6 +35,8 @@ export default function Example() {
                                         name="numero"
                                         placeholder="Ex:P-05"
                                         id="numero"
+                                        value={form.numero}
+                                        onChange={(e) => setForm({ ...form, numero: e.target.value })}
                                         autoComplete="given-name"
                                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     />
@@ -51,6 +51,8 @@ export default function Example() {
                                         id="country"
                                         name="country"
                                         autoComplete="country-name"
+                                        value={form.category}
+                                        onChange={(e) => setForm({ ...form, category: e.target.value })}
                                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     >
                                         <option value={"VIP"}>VIP</option>
@@ -69,6 +71,8 @@ export default function Example() {
                                         type="number"
                                         name="price"
                                         placeholder="Ex:40"
+                                        value={form.price}
+                                        onChange={(e) => setForm({ ...form, price: parseInt(e.target.value) })}
                                         id="price"
                                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     />
@@ -84,6 +88,8 @@ export default function Example() {
                                         id="url"
                                         name="url"
                                         type="text"
+                                        value={form.url}
+                                        onChange={(e) => setForm({ ...form, url: e.target.value })}
                                         placeholder="Ex: https://mmmm/m.jpg"
                                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     />
@@ -105,6 +111,10 @@ export default function Example() {
                         </button>
                         <button
                             type="submit"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                newRoom();
+                            }}
                             className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
                             Enregistrer
