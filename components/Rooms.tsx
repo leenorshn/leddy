@@ -43,12 +43,14 @@ export default function Rooms({ }) {
                             </div>
 
                             <div className="mt-6">
-                                <a
-                                    href={room.href}
-                                    className="relative flex items-center justify-center rounded-md border border-transparent bg-black py-2 px-8 text-sm font-medium text-gray-100 hover:bg-slate-900 hover:text-white"
-                                >
-                                    {room.price + " $ /jour "}   Reserver<span className="sr-only">, {room.name}</span>
-                                </a>
+                                <Link href={`/payment/${room.id}`}>
+                                    <a
+
+                                        className="relative flex items-center justify-center rounded-md border border-transparent bg-black py-2 px-8 text-sm font-medium text-gray-100 hover:bg-slate-900 hover:text-white"
+                                    >
+                                        {room.price + " $ /jour "}   Reserver<span className="sr-only">, {room.name}</span>
+                                    </a>
+                                </Link>
                             </div>
                         </div>
                     ))}

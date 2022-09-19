@@ -25,6 +25,7 @@ model Customer {
   id           String        @id @default(auto()) @map("_id") @db.ObjectId
   phone        String
   name         String
+  email        String
   reservations Reservation[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
@@ -37,13 +38,16 @@ model User {
 }
 
 model Reservation {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  customer   Customer @relation(fields: [customerId], references: [id])
-  room       Room     @relation(fields: [roomId], references: [id])
-  dure       Int
-  payed      Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  customerId String   @db.ObjectId
-  roomId     String   @db.ObjectId
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  customer     Customer @relation(fields: [customerId], references: [id])
+  room         Room     @relation(fields: [roomId], references: [id])
+  dateStart    DateTime
+  dateEnd      DateTime
+  dure         Int
+  totalPayment Int
+  payed        Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  customerId   String   @db.ObjectId
+  roomId       String   @db.ObjectId
 }

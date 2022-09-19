@@ -57,7 +57,7 @@ export default function Home() {
         <Banner />
         <Rooms />
         <AboutTile />
-        <Contact />
+
 
       </main>
 

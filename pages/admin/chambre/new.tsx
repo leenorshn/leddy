@@ -28,14 +28,15 @@ export default function Example() {
                         </div>
                         <div className="mt-6 space-y-3">
                             <div className="sm:col-span-3">
-                                <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
+                                <label htmlFor="numero" className="block text-sm font-medium text-gray-700">
                                     Numero
                                 </label>
                                 <div className="mt-1">
                                     <input
                                         type="text"
-                                        name="first-name"
-                                        id="first-name"
+                                        name="numero"
+                                        placeholder="Ex:P-05"
+                                        id="numero"
                                         autoComplete="given-name"
                                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     />
@@ -60,53 +61,34 @@ export default function Example() {
                             </div>
 
                             <div className="sm:col-span-3">
-                                <label htmlFor="last-name" className="block text-sm font-medium text-gray-700">
-                                    Prix
+                                <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+                                    Prix/jour($)
                                 </label>
                                 <div className="mt-1">
                                     <input
-                                        type="text"
-                                        name="last-name"
-                                        id="last-name"
-                                        autoComplete="family-name"
+                                        type="number"
+                                        name="price"
+                                        placeholder="Ex:40"
+                                        id="price"
                                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     />
                                 </div>
                             </div>
 
                             <div className="sm:col-span-4">
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                    Email address
+                                <label htmlFor="url" className="block text-sm font-medium text-gray-700">
+                                    image url
                                 </label>
                                 <div className="mt-1">
                                     <input
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        autoComplete="email"
-                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                    />
-                                </div>
-                            </div>
-
-
-
-                            <div className="sm:col-span-6">
-                                <label htmlFor="street-address" className="block text-sm font-medium text-gray-700">
-                                    Street address
-                                </label>
-                                <div className="mt-1">
-                                    <input
+                                        id="url"
+                                        name="url"
                                         type="text"
-                                        name="street-address"
-                                        id="street-address"
-                                        autoComplete="street-address"
+                                        placeholder="Ex: https://mmmm/m.jpg"
                                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     />
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
 
@@ -119,13 +101,13 @@ export default function Example() {
                             type="button"
                             className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
-                            Cancel
+                            Annuler
                         </button>
                         <button
                             type="submit"
                             className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
-                            Save
+                            Enregistrer
                         </button>
                     </div>
                 </div>
