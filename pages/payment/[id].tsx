@@ -52,7 +52,7 @@ export default function Example() {
                         </div>
                         <div className="flex-1 p-4 z-10">
                             <h1 className="text-xl text-blue-600 font-bold">{data.numero}</h1>
-                            <h3 className="text-5xl text-black font-medium">{data.price} <span className="text-slate-700 text- font-normal">/jour</span></h3>
+                            <h3 className="text-5xl text-black font-medium">{data.price} $<span className="text-slate-700 text- font-normal">/jour</span></h3>
                         </div>
                     </div>
                     <form className="">

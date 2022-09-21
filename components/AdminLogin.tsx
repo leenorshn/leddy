@@ -21,6 +21,7 @@ export default function AdminLogin({ open, setOpen }) {
         })
         if (resp.ok) {
             router.push("/admin")
+            setOpen(false)
             setLoading(false)
         } else {
             setLoading(false)

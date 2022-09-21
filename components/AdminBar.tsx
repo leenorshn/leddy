@@ -12,7 +12,7 @@ import {
 } from '@heroicons/react/24/outline'
 
 const navigation = [
-    { name: 'Commandes', href: '/admin/', icon: HomeIcon, current: true },
+    { name: 'Reservations', href: '/admin/', icon: HomeIcon, current: true },
     { name: 'Chambres', href: '/admin/chambre', icon: FolderIcon, current: false },
     { name: 'Clients', href: '/admin/clients', icon: UsersIcon, current: false },
     { name: 'Utilisateurs', href: '/admin/users', icon: UserIcon, current: false },
