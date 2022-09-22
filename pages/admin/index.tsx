@@ -1,6 +1,7 @@
 import React from 'react'
 import useSWR from 'swr'
 import AdminBar from '../../components/AdminBar'
+import Moment from "react-moment"
 const people = [
     { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
     // More people...
@@ -25,6 +26,15 @@ function Admin() {
     }
     if (!data) {
         return <>chargement</>
+    }
+
+    const validerPyament = async (id) => {
+        const resp = await fetch(`/api/reservation/${id}`, {
+            method: "POST", body: JSON.stringify({ payed: true },), headers: {
+                "content-type": "application/json"
+            }
+        })
+        return true;
     }
     return (
         <div className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto min-h-screen">
@@ -79,6 +89,12 @@ function Admin() {
                                         >
                                             Date
                                         </th>
+                                        <th
+                                            scope="col"
+                                            className="sticky top-0 z-10 border-b border-gray-300  bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-white backdrop-blur backdrop-filter"
+                                        >
+                                            Action
+                                        </th>
 
                                     </tr>
                                 </thead>
@@ -131,8 +147,25 @@ function Admin() {
                                                     'whitespace-nowrap px-3 py-4 text-sm text-gray-800'
                                                 )}
                                             >
-                                                {reservation.createdAt}
+
+                                                <Moment
+                                                    format="DD/MM/YYYY à HH:mm"
+                                                    date={reservation.createdAt}
+                                                ></Moment>
+
                                             </td>
+                                            <td
+                                                className={classNames(
+                                                    reservationIdx !== people.length - 1 ? 'border-b border-gray-200' : '',
+                                                    'whitespace-nowrap px-3 py-4 text-sm text-gray-800'
+                                                )}
+                                            >
+                                                {reservation.payed ? (<>payé</>) : (<button onClick={() => {
+                                                    validerPyament(reservation.id)
+
+                                                }} className='px-6 py-2 rounded bg-orange-500 text-white'>valider</button>)}
+                                            </td>
+
                                         </tr>
                                     ))}
                                 </tbody>
