@@ -1,18 +1,17 @@
-import Image from "next/image"
+
 import { useRouter } from "next/router"
 import { useState } from "react"
-import ImagesDialog from "../../../components/imagesDialog"
-import { useAuth } from "../../../utils/AuthContext"
+
 
 export default function Example() {
-    const [form, setForm] = useState({ numero: "", category: "", price: 0, url: "" })
+    const [form, setForm] = useState({ phone: "", name: "", role: "admin", password: "" })
     const router = useRouter()
-    const [open, setOpen] = useState(true)
-    const { image } = useAuth()
+
+
 
     const newRoom = async () => {
 
-        const resp = await fetch('/chambre', {
+        const resp = await fetch('/customer', {
             method: "POST", body: JSON.stringify({ ...form }), headers: {
                 "content-type": "application/json"
             }
@@ -24,7 +23,7 @@ export default function Example() {
         <div className="mx-auto max-w-3xl bg-slate-300 px-32 pt-0 pb-16">
             <form className="space-y-8 divide-y divide-gray-200">
                 <div className="space-y-8 divide-y divide-gray-200">
-                    <ImagesDialog open={open} setOpen={setOpen} />
+
 
                     <div className="pt-4 space-y-3">
                         <div>
@@ -34,16 +33,33 @@ export default function Example() {
                         <div className="mt-6 space-y-3">
                             <div className="sm:col-span-3">
                                 <label htmlFor="numero" className="block text-sm font-medium text-gray-700">
-                                    Numero
+                                    Nom
                                 </label>
                                 <div className="mt-1">
                                     <input
                                         type="text"
-                                        name="numero"
+                                        name="nom"
                                         placeholder="Ex:P-05"
-                                        id="numero"
-                                        value={form.numero}
-                                        onChange={(e) => setForm({ ...form, numero: e.target.value })}
+                                        id="nom"
+                                        value={form.name}
+                                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                                        autoComplete="given-name"
+                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                </div>
+                            </div>
+                            <div className="sm:col-span-3">
+                                <label htmlFor="numero" className="block text-sm font-medium text-gray-700">
+                                    Phone
+                                </label>
+                                <div className="mt-1">
+                                    <input
+                                        type="text"
+                                        name="phone"
+                                        placeholder="Ex:P-05"
+                                        id="phone"
+                                        value={form.phone}
+                                        onChange={(e) => setForm({ ...form, phone: e.target.value })}
                                         autoComplete="given-name"
                                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     />
@@ -51,46 +67,42 @@ export default function Example() {
                             </div>
                             <div className="sm:col-span-3">
                                 <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-                                    Categorie
+                                    Role
                                 </label>
                                 <div className="mt-1">
                                     <select
-                                        id="country"
-                                        name="country"
+                                        id="role"
+                                        name="role"
                                         autoComplete="country-name"
-                                        value={form.category}
-                                        onChange={(e) => setForm({ ...form, category: e.target.value })}
+                                        value={form.role}
+                                        onChange={(e) => setForm({ ...form, role: e.target.value })}
                                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     >
-                                        <option value={"VIP"}>VIP</option>
-                                        <option value={'Moderne'}>Moderne</option>
-                                        <option value={'Simple'}>Simple</option>
+                                        <option value={"admin"}>Admin</option>
+                                        <option value={'gesionnaire'}>Gesionnaire</option>
+
                                     </select>
                                 </div>
                             </div>
 
                             <div className="sm:col-span-3">
-                                <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-                                    Prix/jour($)
+                                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                                    Mot de passe
                                 </label>
                                 <div className="mt-1">
                                     <input
-                                        type="number"
-                                        name="price"
+                                        type="text"
+                                        name="password"
                                         placeholder="Ex:40"
-                                        value={form.price}
-                                        onChange={(e) => setForm({ ...form, price: parseInt(e.target.value) })}
-                                        id="price"
+                                        value={form.password}
+                                        onChange={(e) => setForm({ ...form, password: e.target.value })}
+                                        id="password"
                                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     />
                                 </div>
                             </div>
 
-                            <div className="sm:col-span-4">
-                                {image && <Image src={image} alt="image " height={140} width={140} />}
 
-                                <button className="px-4 py-2 rounded-full bg-slate-600 text-white">Choisir une image</button>
-                            </div>
                         </div>
                     </div>
 
