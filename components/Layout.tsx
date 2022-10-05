@@ -1,10 +1,10 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import React, { useEffect } from 'react'
 import Login from '../pages/login';
-import Register from '../pages/register';
+
 import { useAuth } from '../utils/AuthContext';
 import { auth } from '../utils/firebase';
-import Auth from './Auth';
+
 
 export const Layout = ({ children }) => {
     const { currentUser, setCurrentUser } = useAuth();
@@ -19,7 +19,7 @@ export const Layout = ({ children }) => {
 
     return (
         <div>
-            {currentUser ? children : <Auth />}
+            {currentUser ? children : <Login />}
         </div>
     )
 }
