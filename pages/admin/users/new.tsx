@@ -1,6 +1,8 @@
 
+import { addDoc, collection } from "firebase/firestore"
 import { useRouter } from "next/router"
 import { useState } from "react"
+import { db } from "../../../utils/firebase"
 
 
 export default function Example() {
@@ -11,11 +13,10 @@ export default function Example() {
 
     const newRoom = async () => {
 
-        const resp = await fetch('/customer', {
-            method: "POST", body: JSON.stringify({ ...form }), headers: {
-                "content-type": "application/json"
-            }
-        })
+
+        const docRef = await addDoc(collection(db, "users"), {
+            phone: form.phone, name: form.name, role: form.role
+        });
         router.replace("/")
 
     }
@@ -27,7 +28,7 @@ export default function Example() {
 
                     <div className="pt-4 space-y-3">
                         <div>
-                            <h3 className="text-lg font-medium leading-6 text-gray-900">Creer chambre</h3>
+                            <h3 className="text-lg font-medium leading-6 text-gray-900">Creer utilisateur</h3>
                             <p className="mt-1 text-sm text-gray-500"></p>
                         </div>
                         <div className="mt-6 space-y-3">

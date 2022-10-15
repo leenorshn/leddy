@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminBar from '../../../components/AdminBar'
 const people = [
     { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
@@ -12,19 +12,30 @@ function classNames(...classes) {
 
 import useSWR from "swr"
 import Link from 'next/link'
+import { collection, onSnapshot, query } from 'firebase/firestore'
+import { db } from '../../../utils/firebase'
 
 /* This example requires Tailwind CSS v2.0+ */
 
 
 function Chambres() {
-    const fetcher = (...args) => fetch("/api/chambre").then(res => res.json())
-    const { error, data } = useSWR("/api/chambre", fetcher)
-    if (error) {
-        return <>{"Erreur:" + error}</>
-    }
-    if (!data) {
-        return <>chargement...</>
-    }
+    const [chambres, setChambres] = useState([])
+
+    useEffect(() => {
+        const q = query(collection(db, "chambres"),);
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const ops = [];
+            querySnapshot.forEach((doc) => {
+                ops.push({ ...doc.data(), id: doc.id });
+            });
+            console.log(ops);
+
+            setChambres(ops);
+        });
+        return () => unsubscribe()
+
+    }, []);
+
     return (
         <div className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto min-h-screen">
             <AdminBar />
@@ -74,7 +85,7 @@ function Chambres() {
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white">
-                                    {data.map((room, roomIdx) => (
+                                    {chambres.map((room, roomIdx) => (
                                         <tr key={room.id}>
                                             <td
                                                 className={classNames(

@@ -1,10 +1,14 @@
 import prisma from "../../../utils/prisma";
 
 export default async function handler(req, res) {
+  console.log(req.body);
+
   if (req.method == "POST") {
-    const { numero, features, price, url, category } = req.body;
+    const { numero, price, url, category } = req.body;
+    console.log(req.body);
+
     const room = await prisma.room.create({
-      data: { numero, features, price, url, category },
+      data: { numero, price, url, category },
     });
 
     return res.status(201).json(room);

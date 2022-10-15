@@ -8,6 +8,7 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [image, setImage] = useState(null)
+    const [chambre, setChambre] = useState({})
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, user => {
@@ -29,12 +30,7 @@ export function AuthProvider({ children }) {
         const user = resp.user;
         console.log(user);
 
-        const docRef = await addDoc(collection(db, "users"), {
-            date: Timestamp.now(),
-            uid: user.uid,
-            email: user.email,
-            name: name,
-        });
+
         setCurrentUser(resp.user);
         return resp;
     }
@@ -54,6 +50,8 @@ export function AuthProvider({ children }) {
         register,
         logout,
         image,
+        chambre,
+        setChambre,
         setImage
     };
 

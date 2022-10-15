@@ -1,22 +1,31 @@
+import { addDoc, collection } from "firebase/firestore"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import ImagesDialog from "../../../components/imagesDialog"
 import { useAuth } from "../../../utils/AuthContext"
+import { db } from "../../../utils/firebase"
 
 export default function Example() {
     const [form, setForm] = useState({ numero: "", category: "", price: 0, url: "" })
     const router = useRouter()
-    const [open, setOpen] = useState(true)
+    const [open, setOpen] = useState(false)
     const { image } = useAuth()
 
     const newRoom = async () => {
 
-        const resp = await fetch('/chambre', {
-            method: "POST", body: JSON.stringify({ ...form }), headers: {
-                "content-type": "application/json"
-            }
-        })
+        //console.log(form);
+
+        const docRef = await addDoc(collection(db, "chambres"), {
+            numero: form.numero, category: form.category, price: form.price, url: image || ""
+            , occuped: false
+        });
+
+        // const resp = await fetch('/chambre', {
+        //     method: "POST", body: JSON.stringify({ numero: form.numero, category: form.category, price: form.price, url: image || "" }), headers: {
+        //         "content-type": "application/json"
+        //     }
+        // })
         router.replace("/")
 
     }
@@ -89,7 +98,11 @@ export default function Example() {
                             <div className="sm:col-span-4">
                                 {image && <Image src={image} alt="image " height={140} width={140} />}
 
-                                <button className="px-4 py-2 rounded-full bg-slate-600 text-white">Choisir une image</button>
+                                <button onClick={(e) => {
+                                    e.preventDefault()
+                                    setOpen(true)
+                                    setForm({ ...form, url: image })
+                                }} className="px-4 py-2 rounded-full bg-slate-600 text-white">Choisir une image</button>
                             </div>
                         </div>
                     </div>

@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import AdminBar from '../../components/AdminBar'
 import Moment from "react-moment"
+import { collection, doc, onSnapshot, query, updateDoc } from 'firebase/firestore'
+import { db } from '../../utils/firebase'
 const people = [
     { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
     // More people...
@@ -19,21 +21,30 @@ function classNames(...classes) {
 
 
 function Admin() {
-    const fetcher = (...args) => fetch("/api/reservation").then(res => res.json())
-    const { error, data } = useSWR("/api/reservation", fetcher)
-    if (error) {
-        return <>{"Erreur:" + error}</>
-    }
-    if (!data) {
-        return <>chargement</>
-    }
+    const [reservations, setReservations] = useState([])
+
+    useEffect(() => {
+        const q = query(collection(db, "reservations"),);
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const ops = [];
+            querySnapshot.forEach((doc) => {
+                ops.push({ ...doc.data(), id: doc.id });
+            });
+            console.log(ops);
+
+            setReservations(ops);
+        });
+        return () => unsubscribe()
+
+    }, []);
 
     const validerPyament = async (id) => {
-        const resp = await fetch(`/api/reservation/${id}`, {
-            method: "POST", body: JSON.stringify({ payed: true },), headers: {
-                "content-type": "application/json"
-            }
-        })
+        const enseigRef = doc(db, "reservations", id);
+
+        // Set the "capital" field of the city 'DC'
+        await updateDoc(enseigRef, {
+            payed: true,
+        });
         return true;
     }
     return (
@@ -99,7 +110,7 @@ function Admin() {
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white">
-                                    {data.map((reservation, reservationIdx) => (
+                                    {reservations.map((reservation, reservationIdx) => (
                                         <tr key={reservation.id}>
                                             <td
                                                 className={classNames(
@@ -131,7 +142,7 @@ function Admin() {
                                                     'whitespace-nowrap px-3 py-4 text-sm text-gray-800'
                                                 )}
                                             >
-                                                {reservation.dure}
+                                                {Math.abs(reservation.dure)}
                                             </td>
                                             <td
                                                 className={classNames(
@@ -139,7 +150,7 @@ function Admin() {
                                                     'whitespace-nowrap px-3 py-4 text-sm text-gray-800'
                                                 )}
                                             >
-                                                {reservation.totalPayment}
+                                                {Math.abs(reservation.totalPayment)}
                                             </td>
                                             <td
                                                 className={classNames(
@@ -150,7 +161,7 @@ function Admin() {
 
                                                 <Moment
                                                     format="DD/MM/YYYY à HH:mm"
-                                                    date={reservation.createdAt}
+                                                    date={reservation.date.seconds * 1000}
                                                 ></Moment>
 
                                             </td>

@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminBar from '../../../components/AdminBar'
 import useSWR from 'swr'
 import Link from 'next/link'
+import { collection, onSnapshot, query } from 'firebase/firestore'
+import { db } from '../../../utils/firebase'
 
 const people = [
     { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
@@ -19,14 +21,23 @@ function classNames(...classes) {
 
 
 function Users() {
-    const fetcher = (...args) => fetch("/api/users").then(res => res.json())
-    const { error, data } = useSWR("/api/users", fetcher)
-    if (error) {
-        return <>{"Erreur:" + error}</>
-    }
-    if (!data) {
-        return <>chargement</>
-    }
+    const [users, setUsers] = useState([])
+
+    useEffect(() => {
+        const q = query(collection(db, "users"),);
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const ops = [];
+            querySnapshot.forEach((doc) => {
+                ops.push({ ...doc.data(), id: doc.id });
+            });
+            console.log(ops);
+
+            setUsers(ops);
+        });
+        return () => unsubscribe()
+
+    }, []);
+
     return (
         <div className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto min-h-screen">
             <AdminBar />
@@ -76,7 +87,7 @@ function Users() {
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white">
-                                    {data.map((person, personIdx) => (
+                                    {users.map((person, personIdx) => (
                                         <tr key={person.id}>
                                             <td
                                                 className={classNames(

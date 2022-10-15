@@ -3,7 +3,10 @@
 import useSWR from "swr"
 import { useRouter } from "next/router"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { addDoc, collection, doc, onSnapshot, Timestamp, updateDoc } from "firebase/firestore"
+import { db } from "../../utils/firebase"
+import { useAuth } from "../../utils/AuthContext"
 
 
 
@@ -12,31 +15,47 @@ export default function Example() {
     const router = useRouter()
     const [form, setForm] = useState({ name: "", email: "", phone: "", dateStart: "", dateEnd: "" })
 
-    const fetcher = (...args) => fetch(`/api/chambre/${router.query.id}`).then(res => res.json())
-    const { error, data } = useSWR(`/api/chambre/${router.query.id}`, fetcher)
-    if (error) {
-        return <>{"Erreur:" + error}</>
-    }
-    if (!data) {
-        return <>chargement</>
-    }
+
+    const { chambre } = useAuth()
 
 
     const demandReservation = async () => {
-        const resp = await fetch("/api/reservation", {
-            body: JSON.stringify({
-                ...form,
-                roomId: router.query.id,
-            }),
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
 
-            }
+
+        var diff = new Date(form.dateEnd).getDate() - new Date(form.dateStart).getDate();
+        const docRef = await addDoc(collection(db, "reservations"), {
+
+            dateStart: new Date(form.dateStart),
+            dateEnd: new Date(form.dateEnd),
+            room: {
+                ...chambre,
+            },
+            dure: diff,
+            totalPayment: chambre.price * diff,
+            customer: {
+                name: form.name,
+                phone: form.phone,
+                email: form.email
+            },
+            date: Timestamp.now(),
+            payed: false
+
         }).then(d => {
             router.replace("/chambre")
         }).catch(err => console.log(err)
         )
+        const enseigRef = doc(db, "chambres", chambre.id);
+
+        // Set the "capital" field of the city 'DC'
+        await updateDoc(enseigRef, {
+            occuped: true,
+        });
+        const docRefOne = await addDoc(collection(db, "clients"), {
+            name: form.name,
+            phone: form.phone,
+            email: form.email,
+            date: Timestamp.now()
+        })
     }
 
 
@@ -48,11 +67,11 @@ export default function Example() {
 
                     <div className="w-1/2">
                         <div className="w-full h-80 relative">
-                            <Image src={data.url} alt="ok" layout="fill" className="rounded-md" />
+                            <Image src={chambre.url} alt="ok" layout="fill" className="rounded-md" />
                         </div>
                         <div className="flex-1 p-4 z-10">
-                            <h1 className="text-xl text-blue-600 font-bold">{data.numero}</h1>
-                            <h3 className="text-5xl text-black font-medium">{data.price} $<span className="text-slate-700 text- font-normal">/jour</span></h3>
+                            <h1 className="text-xl text-blue-600 font-bold">{chambre.numero}</h1>
+                            <h3 className="text-5xl text-black font-medium">{chambre.price} $<span className="text-slate-700 text- font-normal">/jour</span></h3>
                         </div>
                     </div>
                     <form className="">
